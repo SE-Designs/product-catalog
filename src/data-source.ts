@@ -14,7 +14,7 @@ const AppDataSource = new DataSource({
   // synchronize: false,
   synchronize: true,
   logging: true,
-  entities: [__dirname + "src/entity/**/*.ts"],
+  entities: ["src/entity/**/*.ts"],
   migrations: [],
   subscribers: [],
 });
