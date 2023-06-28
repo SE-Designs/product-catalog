@@ -1,3 +1,4 @@
+import "./config/loadEnv";
 import App from "./App";
 import AppDataSource from "./data-source";
 
@@ -11,7 +12,7 @@ AppDataSource.initialize()
     const app = App();
 
     app.listen(port, () => {
-      console.log(`⚡️ [server]: Server is running on port ${port}`);
+      console.log(`⚡️[server]: running on port ${port}`);
     });
   })
   .catch((err) => {
