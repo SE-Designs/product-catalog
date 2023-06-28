@@ -10,6 +10,8 @@ const AppDataSource = new DataSource({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   // database: "catalog_db",
+  // for production use DB migrations and set:
+  // synchronize: false,
   synchronize: true,
   logging: true,
   entities: [__dirname + "src/entity/**/*.ts"],
