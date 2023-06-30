@@ -6,13 +6,10 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Category } from "./Category";
+import { InventoryTransaction } from "./InventoryTransaction";
 import { Subcategory } from "./Subcategory";
-import { Uom } from "./Uom";
 import { SupplierProduct } from "./SupplierTransaction";
-import {
-  InventoryTransaction,
-  inventoryTransactions,
-} from "./InventoryTransaction";
+import { Uom } from "./Uom";
 import { WarehouseStock } from "./WarehouseStock";
 
 @Entity()

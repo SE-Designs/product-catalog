@@ -5,8 +5,8 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Product } from "./Product";
 import { Category } from "./Category";
+import { Product } from "./Product";
 
 @Entity()
 export class Subcategory {

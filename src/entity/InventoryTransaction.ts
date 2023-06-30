@@ -1,5 +1,5 @@
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Product } from "./Product";
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
 import { Warehouse } from "./Warehouse";
 
 export enum TransactionType {

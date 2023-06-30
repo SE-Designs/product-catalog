@@ -1,4 +1,4 @@
-import { Entity, Column, ManyToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
 import { Product } from "./Product";
 import { Warehouse } from "./Warehouse";
 
@@ -10,6 +10,9 @@ export class WarehouseStock {
   @PrimaryColumn()
   warehouseId: number;
 
+  @Column()
+  quantity: number;
+
   @ManyToOne(() => Product, (product) => product.warehouseStocks, {
     nullable: false,
   })
@@ -19,7 +22,4 @@ export class WarehouseStock {
     nullable: false,
   })
   warehouse: Warehouse;
-
-  @Column()
-  quantity: number;
 }
