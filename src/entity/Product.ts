@@ -8,6 +8,12 @@ import {
 import { Category } from "./Category";
 import { Subcategory } from "./Subcategory";
 import { Uom } from "./Uom";
+import { SupplierProduct } from "./SupplierTransaction";
+import {
+  InventoryTransaction,
+  inventoryTransactions,
+} from "./InventoryTransaction";
+import { WarehouseStock } from "./WarehouseStock";
 
 @Entity()
 export class Product {
@@ -34,4 +40,19 @@ export class Product {
   @ManyToOne(() => Uom, (uom) => uom.products, { nullable: false })
   uom: Uom;
   subcategory: any;
+
+  @OneToMany(
+    () => SupplierProduct,
+    (supplierProduct) => supplierProduct.product
+  )
+  supplierProducts: SupplierProduct[];
+
+  @OneToMany(() => WarehouseStock, (warehouseStock) => warehouseStock.product)
+  warehouseStocks: WarehouseStock[];
+
+  @OneToMany(
+    () => InventoryTransaction,
+    (inventoryTransactions) => inventoryTransactions.product
+  )
+  inventoryTransactions: InventoryTransaction[];
 }
