@@ -7,6 +7,7 @@ import { Subcategory } from "./entity/Subcategory";
 import { Supplier } from "./entity/Supplier";
 import { Uom } from "./entity/Uom";
 import { Warehouse } from "./entity/Warehouse";
+import RegisterTransactionPlugin from "./plugins/RegisterTransaction";
 
 const App = () => {
   const app = express();
@@ -17,6 +18,7 @@ const App = () => {
       watchPg: true,
       graphiql: true,
       enhanceGraphiql: true,
+      appendPlugins: [RegisterTransactionPlugin],
     })
   );
 
