@@ -8,10 +8,11 @@ import { Supplier } from "./entity/Supplier";
 import { Uom } from "./entity/Uom";
 import { Warehouse } from "./entity/Warehouse";
 import RegisterTransactionPlugin from "./plugins/RegisterTransaction";
+import cors from "cors";
 
 const App = () => {
   const app = express();
-
+  app.use(cors());
   app.use(express.json());
   app.use(
     postgraphile(process.env.DB_URL, "public", {
