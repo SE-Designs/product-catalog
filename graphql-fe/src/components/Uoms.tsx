@@ -64,13 +64,13 @@ export const Uoms = (props: {}) => {
 
   const { loading, error, data } = useQuery<AllEntity>(GET_ALL);
   const [addEntity, { error: errorAdding }] = useMutation(ADD_ENTITY, {
-    refetchQueries: [{ query: GET_ALL }],
+    refetchQueries: [{ query: GET_ALL }]
   });
   const [deleteEntity, { error: errorDeleting }] = useMutation(DELETE_ENTITY, {
-    refetchQueries: [{ query: GET_ALL }],
+    refetchQueries: [{ query: GET_ALL }]
   });
   const [updateEntity, { error: errorUpdating }] = useMutation(UPDATE_ENTITY, {
-    refetchQueries: [{ query: GET_ALL }],
+    refetchQueries: [{ query: GET_ALL }]
   });
 
   if (loading) return <span>Loading...</span>;
@@ -91,8 +91,8 @@ export const Uoms = (props: {}) => {
         variables: {
           nodeId: entity.nodeId,
           name: entity.name,
-          abbrev: entity.abbrev,
-        },
+          abbrev: entity.abbrev
+        }
       });
     } else {
       addEntity({ variables: { name: entity?.name, abbrev: entity?.abbrev } });
@@ -119,14 +119,12 @@ export const Uoms = (props: {}) => {
               onClick={() => {
                 setEntity(entity);
                 setDisplayModal(true);
-              }}
-            >
+              }}>
               Edit
             </button>
             <button
               className="text-indigo-600 hover:text-indigo-900"
-              onClick={() => deleteEntity({ variables: { nodeId } })}
-            >
+              onClick={() => deleteEntity({ variables: { nodeId } })}>
               Delete
             </button>
           </td>
@@ -153,8 +151,7 @@ export const Uoms = (props: {}) => {
             onClick={() => {
               setEntity(undefined);
               setDisplayModal(true);
-            }}
-          >
+            }}>
             New
           </button>
         </div>
@@ -165,20 +162,17 @@ export const Uoms = (props: {}) => {
                 <tr>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     ID
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Name
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Abbrev
                   </th>
                   <th scope="col" className="relative px-6 py-3">

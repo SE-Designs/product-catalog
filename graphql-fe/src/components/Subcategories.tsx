@@ -91,13 +91,13 @@ export const Subcategories = (props: {}) => {
   const { loading, error, data } = useQuery<AllEntity>(GET_ALL);
 
   const [addEntity, { error: errorAdding }] = useMutation(ADD_ENTITY, {
-    refetchQueries: [{ query: GET_ALL }],
+    refetchQueries: [{ query: GET_ALL }]
   });
   const [deleteEntity, { error: errorDeleting }] = useMutation(DELETE_ENTITY, {
-    refetchQueries: [{ query: GET_ALL }],
+    refetchQueries: [{ query: GET_ALL }]
   });
   const [updateEntity, { error: errorUpdating }] = useMutation(UPDATE_ENTITY, {
-    refetchQueries: [{ query: GET_ALL }],
+    refetchQueries: [{ query: GET_ALL }]
   });
 
   if (loading) return <span>Loading...</span>;
@@ -118,15 +118,15 @@ export const Subcategories = (props: {}) => {
         variables: {
           nodeId: entity.nodeId,
           description: entity.description,
-          categoryId: entity.categoryId,
-        },
+          categoryId: entity.categoryId
+        }
       });
     } else {
       addEntity({
         variables: {
           description: entity?.description,
-          categoryId: entity?.categoryId,
-        },
+          categoryId: entity?.categoryId
+        }
       });
     }
   };
@@ -151,14 +151,12 @@ export const Subcategories = (props: {}) => {
               onClick={() => {
                 setEntity(entity);
                 setDisplayModal(true);
-              }}
-            >
+              }}>
               Edit
             </button>
             <button
               className="text-indigo-600 hover:text-indigo-900"
-              onClick={() => deleteEntity({ variables: { nodeId } })}
-            >
+              onClick={() => deleteEntity({ variables: { nodeId } })}>
               Delete
             </button>
           </td>
@@ -189,8 +187,7 @@ export const Subcategories = (props: {}) => {
             onClick={() => {
               setEntity(undefined);
               setDisplayModal(true);
-            }}
-          >
+            }}>
             New
           </button>
         </div>
@@ -201,20 +198,17 @@ export const Subcategories = (props: {}) => {
                 <tr>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     ID
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Description
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Category
                   </th>
                   <th scope="col" className="relative px-6 py-3">
@@ -241,7 +235,7 @@ const EntityDetails = (props: {
   const {
     loading: loadingCategories,
     error: errorCategories,
-    data: categories,
+    data: categories
   } = useQuery<{
     allCategories: { nodes: { id: number; description: string }[] };
   }>(GET_CATEGORIES);
@@ -259,8 +253,7 @@ const EntityDetails = (props: {
       <div className="grid col-span-1 m-2 ">
         <label
           htmlFor="description"
-          className="form-label inline-block mb-2 ml-1"
-        >
+          className="form-label inline-block mb-2 ml-1">
           Description
         </label>
         <input
@@ -274,8 +267,7 @@ const EntityDetails = (props: {
         />
         <label
           htmlFor="categories"
-          className="form-label inline-block mb-2 ml-1"
-        >
+          className="form-label inline-block mb-2 ml-1">
           Category
         </label>
         <select
@@ -284,12 +276,11 @@ const EntityDetails = (props: {
           onChange={(e) =>
             setEntity({ ...entity, categoryId: parseInt(e.target.value, 10) })
           }
-          value={entity?.categoryId}
-        >
+          value={entity?.categoryId}>
           {[
             <option key={-1} value={undefined}>
               Select an option
-            </option>,
+            </option>
           ].concat(
             categories.allCategories.nodes.map((category) => {
               return (

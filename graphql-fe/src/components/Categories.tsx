@@ -6,10 +6,9 @@ import {
   useAddCategoryMutation,
   useDeleteCategoryMutation,
   useUpdateCategoryMutation,
-  GetCategoriesDocument,
+  GetCategoriesDocument
 } from "../generated/graphql";
 import { NotFoundError } from "../NotFoundError";
-import { useMutation, useQuery } from "@apollo/client";
 
 const entityName = "Category";
 
@@ -21,53 +20,43 @@ export const Categories = (props: {}) => {
   const [displayModal, setDisplayModal] = useState(false);
   const [entity, setEntity] = useState<Entity | undefined>(undefined);
 
-  const { loading, error, data } = useQuery<AllEntity>(GET_ALL);
+  const { loading, error, data } = useGetCategoriesQuery();
 
-  const [addEntity, { error: errorAdding }] = useMutation(ADD_ENTITY, {
-    refetchQueries: [{ query: GET_ALL }],
+  const [addEntity, { error: errorAdding }] = useAddCategoryMutation({
+    refetchQueries: [{ query: GetCategoriesDocument }]
+  });
+  const [deleteEntity, { error: errorDeleting }] = useDeleteCategoryMutation({
+    refetchQueries: [{ query: GetCategoriesDocument }]
+  });
+  const [updateEntity, { error: errorUpdating }] = useUpdateCategoryMutation({
+    refetchQueries: [{ query: GetCategoriesDocument }]
   });
 
-  const [deleteEntity, { error: errorDeleting }] = useMutation(DELETE_ENTITY, {
-    refetchQueries: [{ query: GET_ALL }],
-  });
-
-  const [updateEntity, { error: errorUpdating }] = useMutation(UPDATE_ENTITY, {
-    refetchQueries: [{ query: GET_ALL }],
-  });
-
+  // Boilerplate code for handling loading & error states
   if (loading) return <span>Loading...</span>;
   if (error || errorAdding || errorDeleting || errorUpdating) {
-    const message =
-      error?.message ||
-      errorAdding?.message ||
-      errorDeleting?.message ||
-      errorUpdating?.message;
-
-    return <span>{`Something went wrong: ${message}`}</span>;
+    throw new NotFoundError();
   }
-  if (!data) return <span>No data found</span>;
+
+  if (!data?.allCategories) return <span>No records found.</span>;
 
   const handleSave = () => {
     setDisplayModal(false);
-
+    // Verifies if it's an update operation or ir it should create a new entity
+    // based on having an existing nodeId
     if (entity?.nodeId) {
       updateEntity({
         variables: {
           nodeId: entity.nodeId,
-          description: {
-            description: entity.description,
-          },
-        },
+          description: entity.description!
+        }
       });
     } else {
-      addEntity({
-        variables: {
-          description: entity?.description,
-        },
-      });
+      addEntity({ variables: { description: entity?.description! } });
     }
   };
 
+  // Renders the existing entity data into a simple table
   const renderData = () => {
     return data.allCategories!.nodes.map((entity) => {
       if (!entity) return null;
@@ -86,14 +75,12 @@ export const Categories = (props: {}) => {
               onClick={() => {
                 setEntity(entity!);
                 setDisplayModal(true);
-              }}
-            >
+              }}>
               Edit
             </button>
             <button
               className="text-indigo-600 hover:text-indigo-900"
-              onClick={() => deleteEntity({ variables: { nodeId } })}
-            >
+              onClick={() => deleteEntity({ variables: { nodeId } })}>
               Delete
             </button>
           </td>
@@ -120,8 +107,7 @@ export const Categories = (props: {}) => {
             onClick={() => {
               setEntity(undefined);
               setDisplayModal(true);
-            }}
-          >
+            }}>
             New
           </button>
         </div>
@@ -132,14 +118,12 @@ export const Categories = (props: {}) => {
                 <tr>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     ID
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Description
                   </th>
                   <th scope="col" className="relative px-6 py-3">
@@ -158,6 +142,8 @@ export const Categories = (props: {}) => {
   );
 };
 
+// Component that implements a visual representation of the entity details,
+// to be utilized inside of the ModalDialog instance.
 const EntityDetails = (props: {
   entity: Entity | undefined;
   setEntity: React.Dispatch<React.SetStateAction<Entity | undefined>>;
@@ -168,8 +154,7 @@ const EntityDetails = (props: {
       <div className="grid col-span-1 m-2 ">
         <label
           htmlFor="description"
-          className="form-label inline-block mb-2 ml-1"
-        >
+          className="form-label inline-block mb-2 ml-1">
           Description
         </label>
         <input

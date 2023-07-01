@@ -1,5 +1,6 @@
-import { gql, useMutation, useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
+import { useQuery, useMutation, gql } from "@apollo/client";
+import { ModalDialog } from "./ModalDialog";
 
 const GET_ALL = gql`
   query GetProducts {
@@ -10,8 +11,12 @@ const GET_ALL = gql`
         sku
         description
         categoryId
+        subcategoryId
         uomId
         categoryByCategoryId {
+          description
+        }
+        subcategoryBySubcategoryId {
           description
         }
         uomByUomId {
@@ -122,7 +127,7 @@ const GET_UOMS = gql`
 `;
 
 interface AllEntity {
-  allProducts { nodes: Entity[] }
+  allProducts: { nodes: Entity[] };
 }
 
 interface Entity {
@@ -322,7 +327,6 @@ export const Products = (props: {}) => {
     </>
   );
 };
-
 
 interface Subcategory {
   id: number;

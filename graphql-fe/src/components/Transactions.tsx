@@ -7,7 +7,7 @@ import {
   useRegisterTransactionMutation,
   GetWarehousesStocksDocument,
   GetInventoryTransactionsDocument,
-  InventoryTransactionTypeEnum,
+  InventoryTransactionTypeEnum
 } from "../generated/graphql";
 import { NotFoundError } from "../NotFoundError";
 
@@ -22,30 +22,30 @@ export const Transactions = (props: {}) => {
   const {
     loading: loadingStocks,
     error: errorStocks,
-    data: stocks,
+    data: stocks
   } = useGetWarehousesStocksQuery();
   const {
     loading: loadingTransactions,
     error: errorTransactions,
-    data: transactions,
+    data: transactions
   } = useGetInventoryTransactionsQuery();
   const {
     loading: loadingProducts,
     error: errorProducts,
-    data: products,
+    data: products
   } = useGetProductsQuery();
   const {
     loading: loadingWarehouses,
     error: errorWarehouses,
-    data: warehouses,
+    data: warehouses
   } = useGetWarehousesQuery();
 
   const [registerTransaction, { error: errorRegisteringTransaction }] =
     useRegisterTransactionMutation({
       refetchQueries: [
         { query: GetWarehousesStocksDocument },
-        { query: GetInventoryTransactionsDocument },
-      ],
+        { query: GetInventoryTransactionsDocument }
+      ]
     });
 
   if (
@@ -84,9 +84,9 @@ export const Transactions = (props: {}) => {
             productId: selectedProductId,
             warehouseId: selectedWarehouseId,
             quantity,
-            type,
-          },
-        },
+            type
+          }
+        }
       });
       setSelectedProductId(0);
       setSelectedWarehouseId(0);
@@ -101,20 +101,18 @@ export const Transactions = (props: {}) => {
         <div className="grid grid-cols-2 gap-4 p-5 ">
           <label
             htmlFor="products"
-            className="form-label inline-block mb-2 ml-1"
-          >
+            className="form-label inline-block mb-2 ml-1">
             Product
           </label>
           <select
             id="products"
             className="rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full"
             onChange={(e) => setSelectedProductId(parseInt(e.target.value, 10))}
-            value={selectedProductId}
-          >
+            value={selectedProductId}>
             {[
               <option key={-1} value={0}>
                 Select an option
-              </option>,
+              </option>
             ].concat(
               products.allProducts?.nodes.map((product) => {
                 return (
@@ -127,8 +125,7 @@ export const Transactions = (props: {}) => {
           </select>
           <label
             htmlFor="warehouses"
-            className="form-label inline-block mb-2 ml-1"
-          >
+            className="form-label inline-block mb-2 ml-1">
             Warehouse
           </label>
           <select
@@ -137,12 +134,11 @@ export const Transactions = (props: {}) => {
             onChange={(e) =>
               setSelectedWarehouseId(parseInt(e.target.value, 10))
             }
-            value={selectedWarehouseId}
-          >
+            value={selectedWarehouseId}>
             {[
               <option key={-1} value={0}>
                 Select an option
-              </option>,
+              </option>
             ].concat(
               warehouses.allWarehouses?.nodes.map((warehouse) => {
                 return (
@@ -162,25 +158,21 @@ export const Transactions = (props: {}) => {
             onChange={(e) =>
               setType(e.target.value as InventoryTransactionTypeEnum)
             }
-            value={type}
-          >
+            value={type}>
             <option
               key={InventoryTransactionTypeEnum.Receive}
-              value={InventoryTransactionTypeEnum.Receive}
-            >
+              value={InventoryTransactionTypeEnum.Receive}>
               {InventoryTransactionTypeEnum.Receive}
             </option>
             <option
               key={InventoryTransactionTypeEnum.Withdraw}
-              value={InventoryTransactionTypeEnum.Withdraw}
-            >
+              value={InventoryTransactionTypeEnum.Withdraw}>
               {InventoryTransactionTypeEnum.Withdraw}
             </option>
           </select>
           <label
             htmlFor="quantity"
-            className="form-label inline-block mb-2 ml-1"
-          >
+            className="form-label inline-block mb-2 ml-1">
             Quantity
           </label>
           <input
@@ -192,8 +184,7 @@ export const Transactions = (props: {}) => {
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded col-span-2"
             disabled={!isValid}
-            onClick={handleRegisterTransaction}
-          >
+            onClick={handleRegisterTransaction}>
             Register
           </button>
         </div>
@@ -207,20 +198,17 @@ export const Transactions = (props: {}) => {
                 <tr>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Product
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Warehouse
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Qty.
                   </th>
                 </tr>
@@ -232,7 +220,7 @@ export const Transactions = (props: {}) => {
                     nodeId,
                     quantity,
                     productByProductId,
-                    warehouseByWarehouseId,
+                    warehouseByWarehouseId
                   } = stock;
                   return (
                     <tr key={nodeId}>
@@ -262,32 +250,27 @@ export const Transactions = (props: {}) => {
                 <tr>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Date
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Product
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Warehouse
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Qty.
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Type
                   </th>
                 </tr>
@@ -302,7 +285,7 @@ export const Transactions = (props: {}) => {
                       date,
                       type,
                       productByProductId,
-                      warehouseByWarehouseId,
+                      warehouseByWarehouseId
                     } = transaction;
                     return (
                       <tr key={id}>
