@@ -1,5 +1,15 @@
-import { gql, useMutation, useQuery } from "@apollo/client";
 import { useState } from "react";
+import { ModalDialog } from "./ModalDialog";
+import {
+  useGetCategoriesQuery,
+  CategoryPatch,
+  useAddCategoryMutation,
+  useDeleteCategoryMutation,
+  useUpdateCategoryMutation,
+  GetCategoriesDocument,
+} from "../generated/graphql";
+import { NotFoundError } from "../NotFoundError";
+import { useMutation, useQuery } from "@apollo/client";
 
 const entityName = "Category";
 
