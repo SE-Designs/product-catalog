@@ -25,7 +25,7 @@ export const Categories = (props: {}) => {
     refetchQueries: [{ query: GET_ALL }],
   });
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <span>Loading...</span>;
   if (error || errorAdding || errorDeleting || errorUpdating) {
     const message =
       error?.message ||
@@ -33,9 +33,9 @@ export const Categories = (props: {}) => {
       errorDeleting?.message ||
       errorUpdating?.message;
 
-    return <p>{`Something went wrong: ${message}`}</p>;
+    return <span>{`Something went wrong: ${message}`}</span>;
   }
-  if (!data) return <p>No data found</p>;
+  if (!data) return <span>No data found</span>;
 
   const handleSave = () => {
     setDisplayModal(false);
