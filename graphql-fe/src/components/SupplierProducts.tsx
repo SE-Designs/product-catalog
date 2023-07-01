@@ -61,7 +61,7 @@ interface Entity {
 
 const entityName = "Supplier";
 
-export const Suppliers = (props: {}) => {
+export const SupplierProducts = (props: {}) => {
   const [displayModal, setDisplayModal] = useState(false);
   const [entity, setEntity] = useState<Entity | undefined>(undefined);
 
