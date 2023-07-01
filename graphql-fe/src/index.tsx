@@ -8,17 +8,18 @@ import ErrorBoundary from "./ErrorBoundary";
 
 const client = new ApolloClient({
   uri: "http://localhost:8090/graphql",
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache()
 });
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
-
 root.render(
   <React.StrictMode>
-    <ApolloProvider client={client}>
-      <App />
-    </ApolloProvider>
+    <ErrorBoundary>
+      <ApolloProvider client={client}>
+        <App />
+      </ApolloProvider>
+    </ErrorBoundary>
   </React.StrictMode>
 );
